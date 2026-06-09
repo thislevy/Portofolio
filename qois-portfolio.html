@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Qois Albani — Frontend Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0a1730;
+    --bg-elev: #0f1f3d;
+    --surface: #16284a;
+    --border: rgba(255, 255, 255, 0.06);
+    --border-strong: rgba(255, 255, 255, 0.12);
+    --text: #e8eef7;
+    --text-muted: #8aa0c0;
+    --text-dim: #5a708f;
+    --accent: #6ea8ff;
+    --accent-dim: rgba(110, 168, 255, 0.12);
+
+    --font-display: 'Space Grotesk', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+    --max: 1100px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Subtle ambient gradient */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 0%, rgba(110, 168, 255, 0.06), transparent),
+      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(110, 168, 255, 0.04), transparent);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ---------- NAVBAR ---------- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    backdrop-filter: blur(12px);
+    background: rgba(10, 23, 48, 0.7);
+    border-bottom: 1px solid var(--border);
+  }
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+  }
+  .brand {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .brand .dot {
+    width: 8px; height: 8px;
+    background: #4ade80;
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(74, 222, 128, 0.6);
+  }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    padding: 180px 0 140px;
+    position: relative;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+  h1.name {
+    font-family: var(--font-display);
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 600;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 28px;
+  }
+  h1.name .accent {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 400;
+  }
+  .hero-tagline {
+    font-size: 20px;
+    color: var(--text-muted);
+    max-width: 580px;
+    line-height: 1.5;
+    margin-bottom: 48px;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 48px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    flex-wrap: wrap;
+  }
+  .hero-meta div span {
+    display: block;
+    color: var(--text);
+    margin-top: 4px;
+    font-size: 13px;
+  }
+
+  /* ---------- SECTION ---------- */
+  section { padding: 100px 0; position: relative; }
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .section-heading {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    max-width: 700px;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .about-text p {
+    font-size: 17px;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+    line-height: 1.7;
+  }
+  .about-text p strong { color: var(--text); font-weight: 500; }
+
+  .stack-list {
+    list-style: none;
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+  .stack-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    color: var(--text);
+  }
+  .stack-list li span {
+    color: var(--text-dim);
+    font-size: 11px;
+  }
+
+  /* ---------- PROJECTS ---------- */
+  .project {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 60px;
+    align-items: center;
+    margin-bottom: 120px;
+  }
+  .project:last-child { margin-bottom: 0; }
+  .project:nth-child(even) .project-visual { order: 2; }
+
+  .project-visual {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    aspect-ratio: 16 / 10;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s ease, border-color 0.4s ease;
+  }
+  .project-visual:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-strong);
+  }
+  .browser-bar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .browser-bar span {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+  }
+  .project-visual svg,
+  .project-visual img {
+    width: 100%;
+    height: calc(100% - 24px);
+    display: block;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 4px;
+  }
+
+  .project-info .project-index {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .project-info h3 {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+  .project-info > p {
+    color: var(--text-muted);
+    font-size: 16px;
+    margin-bottom: 24px;
+    line-height: 1.7;
+  }
+  .project-results {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 28px;
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .project-results div {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .project-results div strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--text);
+    margin-top: 4px;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: -0.01em;
+  }
+  .project-stack {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 5px 10px;
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    color: var(--text-muted);
+  }
+  .project-links {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .project-link:hover { border-color: var(--accent); }
+  .project-link::after { content: '→'; transition: transform 0.2s; }
+  .project-link:hover::after { transform: translateX(4px); }
+  .project-link--secondary {
+    color: var(--text-muted);
+  }
+  .project-link--secondary:hover { border-color: var(--text-muted); color: var(--text); }
+
+  /* ---------- CONTACT ---------- */
+  #contact {
+    border-top: 1px solid var(--border);
+    padding: 120px 0 80px;
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-top: 48px;
+  }
+  .contact-intro p {
+    font-size: 17px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .contact-list {
+    list-style: none;
+  }
+  .contact-list li {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+  }
+  .contact-list .label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .contact-list a, .contact-list span {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 15px;
+    font-family: var(--font-mono);
+    transition: color 0.2s;
+  }
+  .contact-list a:hover { color: var(--accent); }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  footer .container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 768px) {
+    .container { padding: 0 20px; }
+    .hero { padding: 130px 0 80px; }
+    .hero-meta { gap: 24px; }
+    .nav-links { gap: 18px; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .project { grid-template-columns: 1fr; gap: 32px; margin-bottom: 80px; }
+    .project:nth-child(even) .project-visual { order: 0; }
+    .project-results { gap: 20px; flex-wrap: wrap; }
+    section { padding: 60px 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="#" class="brand"><span class="dot"></span>qois.dev</a>
+    <div class="nav-links">
+      <a href="#about">about</a>
+      <a href="#work">work</a>
+      <a href="#contact">contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container">
+    <div class="eyebrow">Frontend Developer · Indonesia</div>
+    <h1 class="name">Qois Albani <span class="accent">—</span><br />building<br />interfaces.</h1>
+    <p class="hero-tagline">
+      Saya merancang dan mengembangkan tampilan web yang bersih, responsif,
+      dan terasa cepat. Fokus pada detail, struktur, dan pengalaman pengguna.
+    </p>
+    <div class="hero-meta">
+      <div>STATUS<span>Available for work</span></div>
+      <div>BASE<span>Sleman, Indonesia</span></div>
+      <div>FOCUS<span>Frontend · UI</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-label">About</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          Saya <strong>Qois Albani</strong>, frontend web developer asal Indonesia.
+        </p>
+        <p>
+          Saya membangun antarmuka web — dari landing page yang ringkas
+          sampai dashboard yang kompleks — dengan pendekatan yang
+          terstruktur dan memperhatikan setiap detail visual maupun teknis.
+        </p>
+        <p>
+          Setiap proyek saya kerjakan dengan satu prinsip: tampilan yang
+          baik harus mudah dipakai, cepat, dan bekerja di semua layar.
+        </p>
+      </div>
+      <ul class="stack-list">
+        <li>HTML &amp; CSS <span>core</span></li>
+        <li>JavaScript <span>core</span></li>
+        <li>React.js <span>framework</span></li>
+        <li>Tailwind CSS <span>styling</span></li>
+        <li>Git &amp; GitHub <span>version control</span></li>
+        <li>Responsive Design <span>practice</span></li>
+        <li>UI / UX Sense <span>practice</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="container">
+    <div class="section-label">Selected work</div>
+    <h2 class="section-heading">Tiga proyek yang menggambarkan cara saya bekerja.</h2>
+
+    <!-- PROJECT 01 -->
+    <article class="project" style="margin-top: 80px;">
+      <div class="project-visual">
+        <div class="browser-bar"><span></span><span></span><span></span></div>
+        <img src="./project-noc.png" alt="NOC luxury property platform homepage" />
+      </div>
+      <div class="project-info">
+        <div class="project-index">/ project one</div>
+        <h3>NOC — Luxury Property Platform</h3>
+        <p>
+          Platform marketing properti mewah dengan listing eksklusif,
+          fitur multi-bahasa (EN/ID), dan toggle dark/light mode. Hero
+          dirancang untuk membangun kesan premium dengan aksen emas
+          pada base gelap.
+        </p>
+        <div class="project-results">
+          <div>Bilingual<strong>EN / ID</strong></div>
+          <div>Listings<strong>50+ Cities</strong></div>
+          <div>Theme<strong>Dark / Light</strong></div>
+        </div>
+        <div class="project-stack">
+          <span class="tag">React</span>
+          <span class="tag">Tailwind</span>
+          <span class="tag">i18n</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="project-link">Live Demo</a>
+          <a href="#" class="project-link project-link--secondary">GitHub</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJECT 02 -->
+    <article class="project">
+      <div class="project-visual">
+        <div class="browser-bar"><span></span><span></span><span></span></div>
+        <img src="./project-nexacorp.png" alt="NexaCorp consulting agency landing page" />
+      </div>
+      <div class="project-info">
+        <div class="project-index">/ project two</div>
+        <h3>NexaCorp — Consulting Agency Site</h3>
+        <p>
+          Website agensi konsultan bisnis dengan pendekatan editorial.
+          Tipografi serif besar sebagai pusat perhatian, layout dua
+          kolom yang lapang, dan elemen geometris halus yang berputar
+          mengikuti scroll.
+        </p>
+        <div class="project-results">
+          <div>Style<strong>Editorial</strong></div>
+          <div>Sections<strong>8</strong></div>
+          <div>Lighthouse<strong>95+</strong></div>
+        </div>
+        <div class="project-stack">
+          <span class="tag">React</span>
+          <span class="tag">Tailwind</span>
+          <span class="tag">Framer Motion</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="https://thislevy.github.io/Nexacorp/">Live Demo</a>
+          <a href="#" class="https://github.com/thislevy/Nexacorp">GitHub</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJECT 03 -->
+    <article class="project">
+      <div class="project-visual">
+        <div class="browser-bar"><span></span><span></span><span></span></div>
+        <img src="./project-copymatic.png" alt="CopymaticAI AI content marketing landing page" />
+      </div>
+      <div class="project-info">
+        <div class="project-index">/ project three</div>
+        <h3>CopymaticAI — SaaS Landing Page</h3>
+        <p>
+          Landing page produk AI untuk content marketing dalam Bahasa
+          Indonesia. Hero dengan gradient typography, CTA ganda yang
+          jelas, dan dark theme yang konsisten dari atas sampai bawah.
+          Fokus pada konversi "Try Demo".
+        </p>
+        <div class="project-results">
+          <div>Niche<strong>SaaS / AI</strong></div>
+          <div>Language<strong>Bahasa ID</strong></div>
+          <div>Sections<strong>6</strong></div>
+        </div>
+        <div class="project-stack">
+          <span class="tag">React</span>
+          <span class="tag">Tailwind</span>
+          <span class="tag">Vite</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="https://thislevy.github.io/SaaS/">Live Demo</a>
+          <a href="#" class="https://github.com/thislevy/SaaS">GitHub</a>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-label">Contact</div>
+    <h2 class="section-heading">Punya proyek atau ide? Mari ngobrol.</h2>
+    <div class="contact-grid">
+      <div class="contact-intro">
+        <p>
+          Saya terbuka untuk pekerjaan freelance, kolaborasi, atau peluang
+          kerja penuh. Jangan ragu menghubungi lewat salah satu kanal di
+          samping — biasanya saya membalas dalam 24 jam.
+        </p>
+      </div>
+      <ul class="contact-list">
+        <li>
+          <span class="label">Email</span>
+          <a href="mailto:[email kamu]">[email kamu]</a>
+        </li>
+        <li>
+          <span class="label">GitHub</span>
+          <a href="#">github.com/[username]</a>
+        </li>
+        <li>
+          <span class="label">LinkedIn</span>
+          <a href="#">linkedin.com/in/[username]</a>
+        </li>
+        <li>
+          <span class="label">WhatsApp</span>
+          <a href="#">+62 [nomor]</a>
+        </li>
+        <li>
+          <span class="label">Instagram</span>
+          <a href="#">@[username]</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div>© 2026 Qois Albani · Built from scratch</div>
+    <div>Sleman, Indonesia</div>
+  </div>
+</footer>
+
+</body>
+</html>
